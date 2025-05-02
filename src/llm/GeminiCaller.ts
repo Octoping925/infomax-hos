@@ -2,16 +2,16 @@ import { GoogleGenAI } from '@google/genai';
 import { Injectable } from '@nestjs/common';
 import { HeroTipQuestion } from 'src/domain/hots/HeroTipQuestion';
 import { LlmCaller } from './LlmCaller';
-
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
-});
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class GeminiCaller implements LlmCaller {
   private readonly MODEL = 'gemini-2.0-flash';
 
+  constructor(private readonly configService: ConfigService) {}
+
   async askQuestion(instruction: string, message: string): Promise<string> {
+    const ai = this.createAi();
     const response = await ai.models.generateContent({
       model: this.MODEL,
       contents: message,
@@ -31,6 +31,8 @@ export class GeminiCaller implements LlmCaller {
     const question = new HeroTipQuestion(heroName);
     const questionText = question.createQuestion();
 
+    const ai = this.createAi();
+
     const response = await ai.models.generateContent({
       model: this.MODEL,
       contents: questionText,
@@ -44,5 +46,11 @@ export class GeminiCaller implements LlmCaller {
     }
 
     return response.text;
+  }
+
+  private createAi() {
+    return new GoogleGenAI({
+      apiKey: this.configService.get<string>('GEMINI_API_KEY'),
+    });
   }
 }
