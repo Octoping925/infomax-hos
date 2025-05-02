@@ -22,7 +22,7 @@ export class LlmService {
   }
 
   async getMapStrategy(mapTitle: string) {
-    const map = HotsMap.valueOf<HotsMap>(mapTitle);
+    const map = HotsMap.fromValue(mapTitle);
     const response = await this.llmCaller.getMapStrategy(map);
 
     return response;
