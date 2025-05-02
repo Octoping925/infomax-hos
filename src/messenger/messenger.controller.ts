@@ -21,8 +21,47 @@ export class MessengerController {
   }
 
   @Post('test')
-  test(@Body() body: DooraySlashCommand) {
+  async test(@Body() body: DooraySlashCommand) {
     console.log(body);
+
+    try {
+      const response = await fetch(body.responseUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          token: body.cmdToken,
+        },
+        body: JSON.stringify({
+          text: 'Please Wait...',
+        }),
+      });
+
+      await response.text();
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    try {
+      const response = await fetch(body.responseUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          token: body.cmdToken,
+        },
+        body: JSON.stringify({
+          text: 'Hello',
+          deleteOriginal: 'true',
+        }),
+      });
+
+      await response.text();
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
 
     return {
       message: 'test',
