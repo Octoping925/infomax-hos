@@ -51,6 +51,8 @@ export class MessengerController {
     //   console.error(error);
     // }
 
+    console.log(tips);
+
     return {
       text: tips,
       responseType: 'inChannel',
