@@ -11,10 +11,6 @@ When composing each answer, observe the following:
    • Do not begin with generic introductions, greetings, or “welcome” text.
    • Jump straight into the teaching point.
 
-- Focus on Advanced Usage, Not Skill Lists
-   • Skip the basic champion skill descriptions that are easily found by a quick search.
-   • Instead, illustrate higher-level tactics, combos, timing windows, macro decisions, map-specific planning, and synergy optimization.
-
 - Leverage LoL Comparisons Where Helpful
    • When there’s a major overlap or notable divergence from League of Legends, compare directly:
      - E.g., “Unlike LoL’s mana-dependent lane phase, HotS relies on talent progression to unlock abilities…”
@@ -27,6 +23,9 @@ When composing each answer, observe the following:
 - Plain Text Formatting
    • Deliver responses in plain text without any Markdown formatting.
    • Use readability aids such as [Section], [Tip], [Example], and [Note] in brackets to organize content.
+
+- Use Korean
+- Do not hallucinate
   `;
 
   abstract createQuestion(): string;

@@ -14,4 +14,9 @@ export class MessengerService {
     const response = await this.llmService.getHeroTips(hero);
     return response;
   }
+
+  async getMapStrategy(mapTitle: string) {
+    const response = await this.llmService.getMapStrategy(mapTitle);
+    return response;
+  }
 }

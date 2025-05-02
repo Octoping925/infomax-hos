@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { HeroTipQuestion } from 'src/domain/hots/HeroTipQuestion';
 import { LlmCaller } from './LlmCaller';
 import { ConfigService } from '@nestjs/config';
+import { MapStrategyQuestion } from 'src/domain/hots/MapStrategyQuestion';
+import { HotsMap } from 'src/domain/hots/map';
 
 @Injectable()
 export class GeminiCaller implements LlmCaller {
@@ -38,6 +40,27 @@ export class GeminiCaller implements LlmCaller {
       contents: questionText,
       config: {
         systemInstruction: HeroTipQuestion.HERO_TIP_INSTRUCTION,
+      },
+    });
+
+    if (!response.text) {
+      throw new Error('No response from Gemini');
+    }
+
+    return response.text;
+  }
+
+  async getMapStrategy(map: HotsMap): Promise<string> {
+    const question = new MapStrategyQuestion(map);
+    const questionText = question.createQuestion();
+
+    const ai = this.createAi();
+
+    const response = await ai.models.generateContent({
+      model: this.MODEL,
+      contents: questionText,
+      config: {
+        systemInstruction: MapStrategyQuestion.MAP_STRATEGY_INSTRUCTION,
       },
     });
 

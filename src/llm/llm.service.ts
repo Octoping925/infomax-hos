@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { LlmCaller } from './LlmCaller';
+import { HotsMap } from 'src/domain/hots/map';
 
 @Injectable()
 export class LlmService {
@@ -16,6 +17,13 @@ export class LlmService {
 
   async getHeroTips(hero: string) {
     const response = await this.llmCaller.getHeroTips(hero);
+
+    return response;
+  }
+
+  async getMapStrategy(mapTitle: string) {
+    const map = HotsMap.valueOf<HotsMap>(mapTitle);
+    const response = await this.llmCaller.getMapStrategy(map);
 
     return response;
   }
