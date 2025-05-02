@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { MessengerService } from './messenger.service';
 
 @Controller('messenger')
@@ -19,4 +19,29 @@ export class MessengerController {
   async getHeroTips(@Query('hero') hero: string) {
     return this.messengerService.getHeroTips(hero);
   }
+
+  @Post('hero/tips')
+  async getHeroTipsByPost(@Body() body: DooraySlashCommand) {
+    if (!body.responseUrl.includes('dooray.com')) {
+      return {
+        message: 'Invalid response URL',
+      };
+    }
+
+    return this.messengerService.getHeroTips(body.text);
+  }
 }
+
+type DooraySlashCommand = {
+  tenantId: string;
+  tenantDomain: string;
+  channelId: string;
+  channelName: string;
+  userId: string;
+  command: string;
+  text: string;
+  responseUrl: string;
+  appToken: string;
+  cmdToken: string;
+  triggerId: string;
+};
