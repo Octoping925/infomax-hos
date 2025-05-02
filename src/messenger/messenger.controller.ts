@@ -32,24 +32,29 @@ export class MessengerController {
 
     const tips = await this.messengerService.getHeroTips(body.text);
 
-    try {
-      const response = await fetch(body.responseUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          token: body.cmdToken,
-        },
-        body: JSON.stringify({
-          text: tips,
-          response_type: 'inChannel',
-        }),
-      });
+    // try {
+    //   const response = await fetch(body.responseUrl, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       token: body.cmdToken,
+    //     },
+    //     body: JSON.stringify({
+    //       text: tips,
+    //       response_type: 'inChannel',
+    //     }),
+    //   });
 
-      await response.text();
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
+    //   await response.text();
+    //   console.log(response);
+    // } catch (error) {
+    //   console.error(error);
+    // }
+
+    return {
+      text: tips,
+      response_type: 'inChannel',
+    };
   }
 }
 
