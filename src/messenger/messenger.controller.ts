@@ -28,7 +28,18 @@ export class MessengerController {
       };
     }
 
-    return this.messengerService.getHeroTips(body.text);
+    const tips = await this.messengerService.getHeroTips(body.text);
+
+    try {
+      await fetch(body.responseUrl, {
+        method: 'POST',
+        body: JSON.stringify({
+          text: tips,
+        }),
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 
