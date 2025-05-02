@@ -37,6 +37,7 @@ export class MessengerController {
         method: 'POST',
         body: JSON.stringify({
           text: tips,
+          response_type: 'inChannel',
         }),
       });
     } catch (error) {
