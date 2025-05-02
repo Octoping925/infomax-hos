@@ -22,6 +22,8 @@ export class MessengerController {
 
   @Post('hero/tips')
   async getHeroTipsByPost(@Body() body: DooraySlashCommand) {
+    console.log(JSON.stringify(body));
+
     if (!body.responseUrl.includes('dooray.com')) {
       return {
         message: 'Invalid response URL',
