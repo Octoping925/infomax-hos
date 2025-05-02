@@ -117,14 +117,14 @@ export class MessengerController {
   }
 
   @Post('map/strategy/tips')
-  async getMapStrategy(@Body() body: DooraySlashInteraction) {
+  async getMapStrategy(@Body() body: DoorayButtonInteraction) {
     console.log(body);
     const strategy = await this.messengerService.getMapStrategy(
       body.actionValue,
     );
     console.log(strategy);
 
-    const response = await fetch(body.originalMessage.responseUrl, {
+    const response = await fetch(body.responseUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ export class MessengerController {
       },
       body: JSON.stringify({
         text: strategy,
-        channelId: body.originalMessage.channelId,
+        channelId: body.channel.id,
         responseType: 'inChannel',
         deleteOriginal: 'true',
       }),
@@ -157,29 +157,39 @@ type DooraySlashCommand = {
   triggerId: string;
 };
 
-type DooraySlashInteraction = {
-  // 테넌트, 채널, 멤버 정보가 제공됩니다.
-  tenant: {
-    id: string;
-    domain: string;
-  };
-  channel: {
-    id: string;
-    name: string;
-  };
-  user: {
-    id: string;
-  };
+type DoorayButtonInteraction = {
+  mqType: number;
+  tenant: { id: string; domain: string };
+  appId: string;
+  appIconAttachId: string;
+  commandId: string;
+  callbackId: string;
   commandName: string;
+  commandRequestUrl: string;
+  channel: { id: string; name: string };
+  user: { id: string; email: string };
   command: string;
   text: string;
-  callbackId: string;
-  actionName: string;
-  actionValue: string;
+  responseUrl: string;
   appToken: string;
   cmdToken: string;
   triggerId: string;
-  commandRequestUrl: string;
+  actionName: string;
+  actionValue: string;
   channelLogId: string;
-  originalMessage: DooraySlashCommand;
+  originalMessage: {
+    id: string;
+    channelId: string;
+    responseType: string;
+    type: number;
+    senderId: string;
+    sentAt: number;
+    seq: number;
+    text: string;
+    attachments: any[];
+    flags: number;
+    replaceOriginal: boolean;
+    deleteOriginal: boolean;
+  };
+  dbId: number;
 };
