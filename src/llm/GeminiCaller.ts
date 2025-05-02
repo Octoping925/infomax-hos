@@ -6,7 +6,7 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class GeminiCaller implements LlmCaller {
-  private readonly MODEL = 'gemini-2.0-flash';
+  private readonly MODEL = 'gemini-2.5-flash-preview-04-17';
 
   constructor(private readonly configService: ConfigService) {}
 
