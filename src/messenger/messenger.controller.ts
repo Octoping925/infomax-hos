@@ -41,7 +41,7 @@ export class MessengerController {
     //     },
     //     body: JSON.stringify({
     //       text: tips,
-    //       response_type: 'inChannel',
+    //       responseType: 'inChannel',
     //     }),
     //   });
 
@@ -53,7 +53,7 @@ export class MessengerController {
 
     return {
       text: tips,
-      response_type: 'inChannel',
+      responseType: 'inChannel',
     };
   }
 }
