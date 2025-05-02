@@ -88,6 +88,7 @@ export class MessengerController {
         body: JSON.stringify({
           text: tips,
           channelId: body.channelId,
+          deleteOriginal: 'true',
         }),
       });
 
@@ -98,11 +99,6 @@ export class MessengerController {
     }
 
     console.log(tips);
-
-    return {
-      text: tips,
-      channelId: body.channelId,
-    };
   }
 }
 
