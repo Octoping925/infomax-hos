@@ -94,6 +94,7 @@ export class MessengerController {
       },
       body: JSON.stringify({
         channelId: body.channelId,
+        text: '맵을 선택해주세요',
         attachments: [
           {
             callbackId: 'send-map-strategy', // 사용자 상호 작용 시 함께 전송됩니다. 상호 작용이 일어난 attachment를 식별할 때 쓸 수 있습니다.
