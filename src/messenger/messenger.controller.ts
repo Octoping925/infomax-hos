@@ -64,10 +64,6 @@ export class MessengerController {
     } catch (error) {
       console.error(error);
     }
-
-    return {
-      message: 'test',
-    };
   }
 
   @Post('hero/tips')
@@ -91,7 +87,6 @@ export class MessengerController {
         },
         body: JSON.stringify({
           text: tips,
-          responseType: 'inChannel',
           channelId: body.channelId,
         }),
       });
@@ -106,7 +101,6 @@ export class MessengerController {
 
     return {
       text: tips,
-      responseType: 'inChannel',
       channelId: body.channelId,
     };
   }
