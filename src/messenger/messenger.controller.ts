@@ -37,6 +37,7 @@ export class MessengerController {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          token: body.cmdToken,
         },
         body: JSON.stringify({
           text: tips,
