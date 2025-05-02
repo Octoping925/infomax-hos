@@ -20,6 +20,15 @@ export class MessengerController {
     return this.messengerService.getHeroTips(hero);
   }
 
+  @Post('test')
+  test(@Body() body: DooraySlashCommand) {
+    console.log(body);
+
+    return {
+      message: 'test',
+    };
+  }
+
   @Post('hero/tips')
   async getHeroTipsByPost(@Body() body: DooraySlashCommand) {
     console.log(JSON.stringify(body));
