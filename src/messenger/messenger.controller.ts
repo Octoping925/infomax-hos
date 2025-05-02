@@ -32,6 +32,7 @@ export class MessengerController {
           token: body.cmdToken,
         },
         body: JSON.stringify({
+          channelId: body.channelId,
           text: 'Please Wait...',
         }),
       });
@@ -52,6 +53,7 @@ export class MessengerController {
           token: body.cmdToken,
         },
         body: JSON.stringify({
+          channelId: body.channelId,
           text: 'Hello',
           deleteOriginal: 'true',
         }),
@@ -80,30 +82,32 @@ export class MessengerController {
 
     const tips = await this.messengerService.getHeroTips(body.text);
 
-    // try {
-    //   const response = await fetch(body.responseUrl, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       token: body.cmdToken,
-    //     },
-    //     body: JSON.stringify({
-    //       text: tips,
-    //       responseType: 'inChannel',
-    //     }),
-    //   });
+    try {
+      const response = await fetch(body.responseUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          token: body.cmdToken,
+        },
+        body: JSON.stringify({
+          text: tips,
+          responseType: 'inChannel',
+          channelId: body.channelId,
+        }),
+      });
 
-    //   await response.text();
-    //   console.log(response);
-    // } catch (error) {
-    //   console.error(error);
-    // }
+      await response.text();
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
 
     console.log(tips);
 
     return {
       text: tips,
       responseType: 'inChannel',
+      channelId: body.channelId,
     };
   }
 }
