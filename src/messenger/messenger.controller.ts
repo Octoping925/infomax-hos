@@ -118,7 +118,9 @@ export class MessengerController {
 
   @Post('map/strategy/tips')
   async getMapStrategy(@Body() body: DooraySlashInteraction) {
-    const strategy = await this.messengerService.getMapStrategy(body.text);
+    const strategy = await this.messengerService.getMapStrategy(
+      body.actionValue,
+    );
 
     const response = await fetch(body.originalMessage.responseUrl, {
       method: 'POST',
