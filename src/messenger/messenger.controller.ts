@@ -33,27 +33,6 @@ export class MessengerController {
         },
         body: JSON.stringify({
           channelId: body.channelId,
-          text: 'Please Wait...',
-        }),
-      });
-
-      await response.text();
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
-
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-
-    try {
-      const response = await fetch(body.responseUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          token: body.cmdToken,
-        },
-        body: JSON.stringify({
-          channelId: body.channelId,
           text: 'Hello',
           deleteOriginal: 'true',
         }),
@@ -88,6 +67,7 @@ export class MessengerController {
         body: JSON.stringify({
           text: tips,
           channelId: body.channelId,
+          responseType: 'inChannel',
           deleteOriginal: 'true',
         }),
       });
