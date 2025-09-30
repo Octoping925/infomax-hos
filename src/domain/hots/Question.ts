@@ -28,5 +28,6 @@ When composing each answer, observe the following:
 - Do not hallucinate
   `;
 
-  abstract createQuestion(): string;
+  abstract getInstruction(): string;
+  abstract getQuestion(): string;
 }

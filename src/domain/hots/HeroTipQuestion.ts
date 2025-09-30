@@ -12,7 +12,11 @@ export class HeroTipQuestion extends Question {
     super();
   }
 
-  createQuestion() {
+  getInstruction() {
+    return HeroTipQuestion.HERO_TIP_INSTRUCTION;
+  }
+
+  getQuestion() {
     return `${this.heroName}을 할 때 어떻게 해야하는지, 운영은 초반, 중반, 후반에 어떻게 해야하는지, 한타 땐 어떻게 해야하는지, 스킬 콤보는 어떻게 되는지 알려줘`;
   }
 }

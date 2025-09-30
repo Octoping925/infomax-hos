@@ -1,7 +1,5 @@
-import { HotsMap } from 'src/domain/hots/map';
+import { Question } from 'src/domain/hots/Question';
 
 export interface LlmCaller {
-  askQuestion(instruction: string, message: string): Promise<string>;
-  getHeroTips(hero: string): Promise<string>;
-  getMapStrategy(map: HotsMap): Promise<string>;
+  askQuestion(question: Question): Promise<string>;
 }

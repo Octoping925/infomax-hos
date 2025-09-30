@@ -16,7 +16,11 @@ export class MapStrategyQuestion extends Question {
     super();
   }
 
-  createQuestion() {
+  getInstruction() {
+    return MapStrategyQuestion.MAP_STRATEGY_INSTRUCTION;
+  }
+
+  getQuestion() {
     return `${this.map.value} 맵의 특징, 유리한 영웅, 불리한 영웅, 중요한 전략적 위치 등을 알려줘`;
   }
 }

@@ -1,24 +1,53 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { MessengerService } from './messenger.service';
-import { HotsMap } from 'src/domain/hots/map';
+import { HotsMap } from '../domain/hots/map';
+import type {
+  DoorayButtonInteraction,
+  DooraySlashCommand,
+} from './dooray/command';
+import { GeminiCaller } from 'src/llm/GeminiCaller';
 
 @Controller('messenger')
 export class MessengerController {
-  constructor(private readonly messengerService: MessengerService) {}
-
-  @Get('chat')
-  async askQuestion(@Query('message') message: string) {
-    console.log(message);
-    const response = await this.messengerService.askQuestion(message);
-
-    return {
-      message: response,
-    };
-  }
+  constructor(
+    private readonly messengerService: MessengerService,
+    private readonly geminiCaller: GeminiCaller,
+  ) {}
 
   @Get('hero/tips')
   async getHeroTips(@Query('hero') hero: string) {
     return this.messengerService.getHeroTips(hero);
+  }
+
+  @Post('rotations')
+  async getRotations(@Body() body: DooraySlashCommand) {
+    const rotations = await this.messengerService.getRotations();
+
+    try {
+      const response = await fetch(body.responseUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          token: body.cmdToken,
+        },
+        body: JSON.stringify({
+          text: rotations.map((it) => `- ${it.name}`).join('\n'),
+          attachments: rotations.map((it) => ({
+            image_url: it.imageURL,
+            title: it.name,
+            text: it.name,
+          })),
+          // channelId: body.channelId,
+          responseType: 'inChannel',
+          deleteOriginal: 'true',
+        }),
+      });
+
+      await response.text();
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   @Post('test')
@@ -142,54 +171,3 @@ export class MessengerController {
     console.log(response);
   }
 }
-
-type DooraySlashCommand = {
-  tenantId: string;
-  tenantDomain: string;
-  channelId: string;
-  channelName: string;
-  userId: string;
-  command: string;
-  text: string;
-  responseUrl: string;
-  appToken: string;
-  cmdToken: string;
-  triggerId: string;
-};
-
-type DoorayButtonInteraction = {
-  mqType: number;
-  tenant: { id: string; domain: string };
-  appId: string;
-  appIconAttachId: string;
-  commandId: string;
-  callbackId: string;
-  commandName: string;
-  commandRequestUrl: string;
-  channel: { id: string; name: string };
-  user: { id: string; email: string };
-  command: string;
-  text: string;
-  responseUrl: string;
-  appToken: string;
-  cmdToken: string;
-  triggerId: string;
-  actionName: string;
-  actionValue: string;
-  channelLogId: string;
-  originalMessage: {
-    id: string;
-    channelId: string;
-    responseType: string;
-    type: number;
-    senderId: string;
-    sentAt: number;
-    seq: number;
-    text: string;
-    attachments: any[];
-    flags: number;
-    replaceOriginal: boolean;
-    deleteOriginal: boolean;
-  };
-  dbId: number;
-};

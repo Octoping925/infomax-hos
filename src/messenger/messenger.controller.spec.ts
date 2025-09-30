@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MessengerController } from './messenger.controller';
 import { MessengerService } from './messenger.service';
-import { LlmModule } from 'src/llm/llm.module';
+import { LlmModule } from '../llm/llm.module';
 
 describe('MessengerController', () => {
   let controller: MessengerController;
